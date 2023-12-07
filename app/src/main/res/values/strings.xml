@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Shopping list</string>
+    <string name="fill_info">Fill in the information about your new item</string>
+    <string name="fill_name">Enter the name:</string>
+    <string name="fill_description">Enter the description:</string>
+    <string name="btn_add">Create new item</string>
+    <string name="empty_list">The shopping list is empty now</string>
+</resources>
