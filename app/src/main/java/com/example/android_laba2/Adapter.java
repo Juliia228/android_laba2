@@ -70,10 +70,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
         holder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent delItemIntent = new Intent(v.getContext(), AgreementActivity.class);
-                delItemIntent.putExtra("id", position);
-                v.getContext().startActivity(delItemIntent);
-                //((Activity) v.getContext()).startActivityForResult(delItemIntent, 333);
+                DeleteItem(position);
             }
         });
     }
