@@ -1,8 +1,13 @@
 <resources>
     <string name="app_name">Shopping list</string>
     <string name="fill_info">Fill in the information about your new item</string>
+    <string name="update_info">Update the information about your item</string>
     <string name="fill_name">Enter the name:</string>
     <string name="fill_description">Enter the description:</string>
     <string name="btn_add">Create new item</string>
+    <string name="btn_edit">Update the item</string>
     <string name="empty_list">The shopping list is empty now</string>
+    <string name="is_delete">Are you sure you want to delete this item?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>
