@@ -1,49 +1,121 @@
 package com.example.android_laba2;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
-
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.ArrayList;
+import android.annotation.SuppressLint;
+import android.widget.Toast;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
-    private final ArrayList<MainActivity.Item> Data;
+    private final ArrayList<Product> Data;
+    public Adapter(ArrayList<Product> list) {
+        Data = list;
+    }
 
-    // Return the size of your dataset (invoked by the layout manager)
+    static class Product {
+        String Name;
+        String Description;
+        Product() {
+            Name = "";
+            Description = "";
+        }
+        Product(String name, String description) {
+            Name = name;
+            Description = description;
+        }
+    }
+
     @Override
     public int getItemCount() {
         return Data.size();
     }
 
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int ViewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_view, parent, false);
-//        Log.d("Adapter", "OnCreateViewHolder");
-        return new MyViewHolder(view);
-    }
-
-    public void onBindViewHolder(MyViewHolder vh, int position) {
-//        Log.d("Adapter", "OnBindViewHolder for position: " + position);
-        MainActivity.Item item = Data.get(position);
-        vh.name.setText(item.Name);
-        vh.description.setText(item.Description);
-        //vh.mTextView.setText(Data.get(position).Name);
-    }
-
-    // Provide a suitable constructor (depends on the kind of dataset)
-    public Adapter(ArrayList<MainActivity.Item> list) {
-        Data = list;
-    }
-
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView name;
-        public TextView description;
+        public TextView name, description;
+        public ImageView edit, delete;
         public MyViewHolder(View v) {
             super(v);
             name = v.findViewById(R.id.name);
             description = v.findViewById(R.id.description);
+            edit = v.findViewById(R.id.edit);
+            delete = v.findViewById(R.id.delete);
         }
+    }
+
+    @NonNull
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int ViewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_view, parent, false);
+        return new MyViewHolder(view);
+    }
+
+    public void onBindViewHolder(MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
+        Product item = Data.get(position);
+        holder.name.setText(item.Name);
+        holder.description.setText(item.Description);
+        holder.edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent addItemIntent = new Intent(v.getContext(), UpdateListActivity.class);
+                addItemIntent.putExtra("is_update", true);
+                addItemIntent.putExtra("id", position);
+                //Log.d("mymy", "send intent from button to UpdateListActivity");
+                //v.getContext().startActivity(addItemIntent);
+                //Context context = v.getContext();
+                ((Activity) v.getContext()).startActivityForResult(addItemIntent, 2);
+                //Log.d("mymy", "after intent from button to UpdateListActivity");
+            }
+        });
+        holder.delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent delItemIntent = new Intent(v.getContext(), AgreementActivity.class);
+                delItemIntent.putExtra("id", position);
+                v.getContext().startActivity(delItemIntent);
+            }
+        });
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //if (data == null) { return;}
+        //Log.d("mymy", "result");
+        int id = data.getIntExtra("id", 0);
+        String name = data.getStringExtra("name");
+        String description = data.getStringExtra("description");
+        UpdateList(id, name, description);
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    public void CreateItem(String name, String description) {
+        Data.add(new Product(name, description));
+        notifyDataSetChanged();
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    public void UpdateList(int id, String name, String description) {
+        Product product = Data.get(id);
+        if (!(name.equals(""))) {
+            product.Name = name;
+            Data.set(id, product);
+        }
+        if (!(description.equals(""))) {
+            product.Description = description;
+            Data.set(id, product);
+        }
+        notifyDataSetChanged();
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    public void DeleteItem(int id) {
+        Data.remove(id);
+        notifyDataSetChanged();
     }
 }

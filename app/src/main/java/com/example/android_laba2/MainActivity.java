@@ -3,29 +3,16 @@ package com.example.android_laba2;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
-
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.ArrayList;
 
 public class MainActivity extends Activity implements View.OnClickListener {
-    static class Item {
-        String Name;
-        String Description;
-        Item() {
-            Name = "";
-            Description = "";
-        }
-        Item(String name, String description) {
-            Name = name;
-            Description = description;
-        }
-    }
-    ArrayList<Item> shoppingList = new ArrayList<>();
+    private Adapter adapter;
     ImageButton addItem;
     TextView emptyList;
 
@@ -33,37 +20,47 @@ public class MainActivity extends Activity implements View.OnClickListener {
     public void onCreate(Bundle savedInstanceState) {
         super .onCreate(savedInstanceState);
         setContentView(R.layout.main);
-        if (shoppingList.isEmpty()) {
+        adapter = new Adapter(new ArrayList<>());
+        if (adapter.getItemCount() == 0) {
             emptyList = (TextView) findViewById(R.id.emptyList);
             emptyList.setText(R.string.empty_list);
         }
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new Adapter(shoppingList));
+        recyclerView.setAdapter(adapter);
 
         addItem = (ImageButton) findViewById(R.id.button);
         addItem.setOnClickListener(this);
     }
 
+    public void onResume() {
+        super .onResume();
+        emptyList = (TextView) findViewById(R.id.emptyList);
+        if (adapter.getItemCount() == 0) {
+            emptyList.setText(R.string.empty_list);
+        } else {
+            emptyList.setText("");
+        }
+    }
+
     public void onClick(View v) {
-        Intent addItemIntent = new Intent(this, AddItemActivity.class);
-        startActivity(addItemIntent);
+        Intent addItemIntent = new Intent(this, UpdateListActivity.class);
+        startActivityForResult(addItemIntent, 101);
     }
 
-    public void CreateItem(String name, String description) {
-        shoppingList.add(new Item(name, description));
-    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //if (data == null) { return;}
+        switch (requestCode) {
+            case 101:
+                String name = data.getStringExtra("name");
+                String description = data.getStringExtra("description");
+                adapter.CreateItem(name, description);
+                break;
+            case 202:
 
-    public void UpdateList(int id, String name, String description) {
-        Item element = shoppingList.get(id);
-        if (!(name.equals(""))) {
-            element.Name = name;
-            shoppingList.set(id, element);
         }
-        if (!(description.equals(""))) {
-            element.Description = description;
-            shoppingList.set(id, element);
-        }
+        //Log.d("mymy", "main Activity");
     }
 }
