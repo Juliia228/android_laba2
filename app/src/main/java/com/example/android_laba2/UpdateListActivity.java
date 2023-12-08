@@ -57,7 +57,7 @@ public class UpdateListActivity extends Activity implements View.OnClickListener
                 }
                 break;
             case R.id.back:
-                setResult(-2, new Intent());
+                setResult(-2);
                 finish();
                 break;
         }
