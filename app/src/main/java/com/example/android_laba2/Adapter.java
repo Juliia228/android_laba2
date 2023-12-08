@@ -1,9 +1,7 @@
 package com.example.android_laba2;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import android.annotation.SuppressLint;
-import android.widget.Toast;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
     private final ArrayList<Product> Data;
@@ -67,11 +64,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
                 Intent addItemIntent = new Intent(v.getContext(), UpdateListActivity.class);
                 addItemIntent.putExtra("is_update", true);
                 addItemIntent.putExtra("id", position);
-                //Log.d("mymy", "send intent from button to UpdateListActivity");
-                //v.getContext().startActivity(addItemIntent);
-                //Context context = v.getContext();
-                ((Activity) v.getContext()).startActivityForResult(addItemIntent, 2);
-                //Log.d("mymy", "after intent from button to UpdateListActivity");
+                ((Activity) v.getContext()).startActivityForResult(addItemIntent, 222);
             }
         });
         holder.delete.setOnClickListener(new View.OnClickListener() {
@@ -80,17 +73,9 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
                 Intent delItemIntent = new Intent(v.getContext(), AgreementActivity.class);
                 delItemIntent.putExtra("id", position);
                 v.getContext().startActivity(delItemIntent);
+                //((Activity) v.getContext()).startActivityForResult(delItemIntent, 333);
             }
         });
-    }
-
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        //if (data == null) { return;}
-        //Log.d("mymy", "result");
-        int id = data.getIntExtra("id", 0);
-        String name = data.getStringExtra("name");
-        String description = data.getStringExtra("description");
-        UpdateList(id, name, description);
     }
 
     @SuppressLint("NotifyDataSetChanged")

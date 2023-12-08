@@ -3,10 +3,11 @@ package com.example.android_laba2;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
@@ -46,21 +47,27 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
     public void onClick(View v) {
         Intent addItemIntent = new Intent(this, UpdateListActivity.class);
-        startActivityForResult(addItemIntent, 101);
+        startActivityForResult(addItemIntent, 111);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        //if (data == null) { return;}
-        switch (requestCode) {
-            case 101:
-                String name = data.getStringExtra("name");
-                String description = data.getStringExtra("description");
-                adapter.CreateItem(name, description);
-                break;
-            case 202:
-
+        if (data == null || resultCode != -1) {
+            if (resultCode != -2) {
+                Toast.makeText(getApplicationContext(), "Error :(", Toast.LENGTH_LONG).show();
+            }
+        } else {
+            String name = data.getStringExtra("name");
+            String description = data.getStringExtra("description");
+            switch (requestCode) {
+                case 111: // add the item
+                    adapter.CreateItem(name, description);
+                    break;
+                case 222: // update the item
+                    int id = data.getIntExtra("id", 0);
+                    adapter.UpdateList(id, name, description);
+                    break;
+            }
         }
-        //Log.d("mymy", "main Activity");
     }
 }
