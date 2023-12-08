@@ -36,7 +36,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/description"
         app:layout_constraintEnd_toStartOf="@+id/delete"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_edit" />
+        android:src="@android:drawable/ic_menu_edit" />
 
     <ImageView
         android:id="@+id/delete"
@@ -46,5 +46,5 @@
         app:layout_constraintBottom_toBottomOf="@+id/description"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/name"
-        app:srcCompat="@android:drawable/ic_menu_delete" />
+        android:src="@android:drawable/ic_menu_delete" />
 </androidx.constraintlayout.widget.ConstraintLayout>
