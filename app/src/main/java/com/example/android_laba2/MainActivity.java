@@ -46,6 +46,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
     public void onClick(View v) {
         Intent addItemIntent = new Intent(this, UpdateListActivity.class);
+        addItemIntent.putExtra("act", "create");
         startActivityForResult(addItemIntent, 111);
     }
 

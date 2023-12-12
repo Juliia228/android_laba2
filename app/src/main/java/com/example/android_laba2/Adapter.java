@@ -31,6 +31,14 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
         }
     }
 
+    public String getName(int id) {
+        return Data.get(id).Name;
+    }
+
+    public String getDescription(int id) {
+        return Data.get(id).Description;
+    }
+
     @Override
     public int getItemCount() {
         return Data.size();
@@ -62,7 +70,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
             @Override
             public void onClick(View v) {
                 Intent addItemIntent = new Intent(v.getContext(), UpdateListActivity.class);
-                addItemIntent.putExtra("is_update", true);
+                addItemIntent.putExtra("act", "update");
                 addItemIntent.putExtra("id", position);
                 ((Activity) v.getContext()).startActivityForResult(addItemIntent, 222);
             }

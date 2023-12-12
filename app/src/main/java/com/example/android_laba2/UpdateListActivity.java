@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import java.util.Objects;
 
 public class UpdateListActivity extends Activity implements View.OnClickListener {
     Button addItem;
@@ -24,20 +25,25 @@ public class UpdateListActivity extends Activity implements View.OnClickListener
         super .onCreate(savedInstanceState);
         setContentView(R.layout.add_item);
 
+        act = (TextView) findViewById(R.id.fillInfo);
         addItem = (Button) findViewById(R.id.btnAdd);
-        Intent intent = getIntent();
-        if (intent.getBooleanExtra("is_update", false)) {
-            act = (TextView) findViewById(R.id.fillInfo);
-            act.setText(R.string.update_info);
-            addItem.setText(R.string.btn_edit);
-            id = intent.getIntExtra("id", -1);
-        }
-
         etName = (EditText) findViewById(R.id.enterName);
         etDescription = (EditText) findViewById(R.id.enterDescription);
-        addItem.setOnClickListener(this);
         back = (ImageView) findViewById(R.id.back);
         back.setOnClickListener(this);
+        Intent intent = getIntent();
+        switch (Objects.requireNonNull(intent.getStringExtra("act"))) {
+            case "update":
+                act.setText(R.string.update_info);
+                addItem.setText(R.string.btn_edit);
+                id = intent.getIntExtra("id", -1);
+                break;
+            case "create":
+                break;
+            default:
+                break;
+        }
+        addItem.setOnClickListener(this);
     }
 
     public void onClick(View v) {
