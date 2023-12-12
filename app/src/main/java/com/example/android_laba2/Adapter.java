@@ -96,12 +96,9 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
         Product product = Data.get(id);
         if (!(name.equals(""))) {
             product.Name = name;
-            Data.set(id, product);
         }
-        if (!(description.equals(""))) {
-            product.Description = description;
-            Data.set(id, product);
-        }
+        product.Description = description;
+        Data.set(id, product);
         notifyDataSetChanged();
     }
 
