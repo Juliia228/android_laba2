@@ -53,7 +53,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (data == null || resultCode != -1) {
-            if (resultCode != -2) {
+            if (resultCode != 0) {
                 Toast.makeText(getApplicationContext(), "Error :(", Toast.LENGTH_LONG).show();
             }
         } else {

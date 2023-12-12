@@ -67,7 +67,7 @@ public class UpdateListActivity extends Activity implements View.OnClickListener
                 }
                 break;
             case R.id.back:
-                setResult(-2);
+                setResult(RESULT_CANCELED);
                 finish();
                 break;
         }
