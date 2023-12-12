@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -37,6 +38,10 @@ public class UpdateListActivity extends Activity implements View.OnClickListener
                 act.setText(R.string.update_info);
                 addItem.setText(R.string.btn_edit);
                 id = intent.getIntExtra("id", -1);
+                if (id != -1) {
+                    etName.setText(intent.getStringExtra("name"));
+                    etDescription.setText(intent.getStringExtra("desc"));
+                }
                 break;
             case "create":
                 break;

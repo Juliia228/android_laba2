@@ -72,6 +72,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
                 Intent addItemIntent = new Intent(v.getContext(), UpdateListActivity.class);
                 addItemIntent.putExtra("act", "update");
                 addItemIntent.putExtra("id", position);
+                addItemIntent.putExtra("name", getName(position));
+                addItemIntent.putExtra("desc", getDescription(position));
                 ((Activity) v.getContext()).startActivityForResult(addItemIntent, 222);
             }
         });
